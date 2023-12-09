@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:rtsc_web/views/PR-Dashboard/pr_dashboard_screen.dart';
+import 'package:rtsc_web/views/analytics/analytics_screen.dart';
 import 'package:rtsc_web/views/post/create_post.dart';
+import 'package:rtsc_web/views/pr_member/pr_members.dart';
+import 'package:rtsc_web/views/pr_request/request_screen.dart';
 import 'package:sidebarx/sidebarx.dart';
+
+import '../home/home_screen.dart';
 
 class ScreensView extends StatelessWidget {
   const ScreensView({
@@ -20,23 +24,15 @@ class ScreensView extends StatelessWidget {
         final pageTitle = getTitleByIndex(controller.selectedIndex);
         switch (controller.selectedIndex) {
           case 0:
-            return ListView.builder(
-              padding: const EdgeInsets.only(top: 10),
-              itemBuilder: (context, index) => Container(
-                height: 100,
-                width: double.infinity,
-                margin: const EdgeInsets.only(bottom: 10, right: 10, left: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.red,
-                  boxShadow: const [BoxShadow()],
-                ),
-              ),
-            );
+            return HomeScreen();
           case 1:
-            return PRDashboardScreen();
+            return PRMemberScreen();
           case 2:
+            return RequestScreen();
+          case 3 :
             return CreatePostScreen();
+          case 4 :
+            return AnalyticsScreen();
           default:
             return Text(
               pageTitle,
@@ -57,12 +53,14 @@ String getTitleByIndex(int index) {
     case 2:
       return 'Post';
     case 3:
-      return 'Analytics';
+      return 'Request';
     case 4:
-      return 'Profile';
+      return 'Analytics';
     case 5:
-      return 'Settings';
+      return 'Profile';
     case 6:
+      return 'Settings';
+    case 7:
       return 'Logout';
     default:
       return 'Not found page';

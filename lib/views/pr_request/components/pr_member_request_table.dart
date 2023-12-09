@@ -4,14 +4,16 @@ import 'package:rtsc_web/models/pr_member_model.dart';
 import 'package:rtsc_web/utils/constants/colors.dart';
 import 'package:rtsc_web/widgets/custom_text_widgets.dart';
 
-class PRMemberTable extends StatefulWidget {
-  const PRMemberTable({Key? key}) : super(key: key);
+import '../../../widgets/custom_button_field.dart';
+
+class PRMemberRequestTable extends StatefulWidget {
+  const PRMemberRequestTable({Key? key}) : super(key: key);
 
   @override
-  _PRMemberTableState createState() => _PRMemberTableState();
+  _PRMemberRequestTableState createState() => _PRMemberRequestTableState();
 }
 
-class _PRMemberTableState extends State<PRMemberTable> {
+class _PRMemberRequestTableState extends State<PRMemberRequestTable> {
   bool selectAll = false;
 
   List<PRMemberModel> prMembers = [
@@ -27,6 +29,10 @@ class _PRMemberTableState extends State<PRMemberTable> {
     PRMemberModel('Ava', 'Martin', 'ava@gmail.com', 9012345678),
     PRMemberModel('William', 'Taylor', 'william@gmail.com', 6789012345),
     PRMemberModel('Ava', 'Martin', 'ava@gmail.com', 9012345678),
+    PRMemberModel('Sophia', 'Brown', 'sophia@gmail.com', 2345678901),
+    PRMemberModel('Michael', 'Lee', 'michael@gmail.com', 8901234567),
+    PRMemberModel('Olivia', 'Garcia', 'olivia@gmail.com', 4567890123),
+    PRMemberModel('William', 'Taylor', 'william@gmail.com', 6789012345),
   ];
 
   @override
@@ -43,6 +49,8 @@ class _PRMemberTableState extends State<PRMemberTable> {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: DataTable(
+              horizontalMargin: 50.0,
+              dividerThickness: 2.0,
               columns: [
                 DataColumn(
                   label: CustomTextWidget(
@@ -106,18 +114,20 @@ class _PRMemberTableState extends State<PRMemberTable> {
                           text: prMembers[index].email.toString())),
                       DataCell(CustomTextWidget(
                           text: prMembers[index].phoneNumber.toString())),
-                      DataCell(TextButton(
-                          onPressed: () {},
-                          child: CustomTextWidget(
-                            text: 'Accept',
-                            textColor: Colors.white60,
-                          ))),
-                      DataCell(TextButton(
-                          onPressed: () {},
-                          child: CustomTextWidget(
-                            text: 'Reject',
-                            textColor: Colors.redAccent,
-                          )))
+                      DataCell(
+                        CustomButton(
+                          text: 'Accept',
+                          onTap: () {},
+                          buttonColor: Colors.green,
+                        ),
+                      ),
+                      DataCell(
+                        CustomButton(
+                          text: 'Reject',
+                          onTap: () {},
+                          buttonColor: Colors.redAccent,
+                        ),
+                      )
                     ],
                   ),
               ],

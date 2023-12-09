@@ -26,12 +26,12 @@ class SideMenu extends StatelessWidget {
         textStyle: GoogleFonts.poppins(
           fontSize: 14,
           fontWeight: FontWeight.normal,
-          color: Colors.white.withOpacity(0.7),
+          color: Colors.black54,
         ),
         selectedTextStyle: GoogleFonts.poppins(
           fontSize: 16,
           fontWeight: FontWeight.w500,
-          color: Colors.white60,
+          color:Color(0xABB60505) ,
         ),
         itemTextPadding: const EdgeInsets.only(left: 30),
         selectedItemTextPadding: const EdgeInsets.only(left: 30),
@@ -55,13 +55,14 @@ class SideMenu extends StatelessWidget {
           ],
         ),
         iconTheme: IconThemeData(
-          color: Colors.white.withOpacity(0.7),
+          color: Colors.black54,
           size: 20,
         ),
         selectedIconTheme: const IconThemeData(
-          color: Colors.white,
+          color: Color(0xABB60505),
           size: 20,
         ),
+
       ),
       extendedTheme: const SidebarXTheme(
         width: 200,
@@ -70,6 +71,7 @@ class SideMenu extends StatelessWidget {
         ),
       ),
       footerDivider: AppColors.divider,
+
       headerBuilder: (context, extended) {
         return SizedBox(
           height: 120,
@@ -90,6 +92,10 @@ class SideMenu extends StatelessWidget {
         const SidebarXItem(
           icon: Icons.person_2_rounded,
           label: 'PR Member',
+        ),
+        const SidebarXItem(
+          icon: Icons.add_card,
+          label: 'PR Request',
         ),
         const SidebarXItem(
           icon: Icons.post_add_rounded,

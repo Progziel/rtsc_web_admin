@@ -24,7 +24,7 @@ class CustomTextWidget extends StatelessWidget {
       style: GoogleFonts.poppins(
         fontSize: fSize ?? (context.isLargeTablet ? 16 : 14),
         fontWeight: fWeight ?? FontWeight.normal,
-        color: textColor ?? Colors.white60,
+        color: textColor ?? Colors.black54,
       ),
       //overflow: TextOverflow.ellipsis,
     );

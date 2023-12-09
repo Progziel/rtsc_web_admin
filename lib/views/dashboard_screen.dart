@@ -8,7 +8,7 @@ import 'components/side_menu.dart';
 class DashboardPage extends StatelessWidget {
   DashboardPage({Key? key}) : super(key: key);
 
-  final _controller = SidebarXController(selectedIndex: 0, extended: true);
+  final _controller = SidebarXController(selectedIndex: 2, extended: true);
   final _key = GlobalKey<ScaffoldState>();
 
   @override

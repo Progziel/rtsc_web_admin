@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rtsc_web/utils/constants/colors.dart';
-import 'package:rtsc_web/views/PR-Dashboard/components/table.dart';
-
 import '../../widgets/custom_text_widgets.dart';
+import 'components/pr_member_request_table.dart';
 
-class PRDashboardScreen extends StatefulWidget {
-  const PRDashboardScreen({Key? key}) : super(key: key);
+class RequestScreen extends StatefulWidget {
+  const RequestScreen({Key? key}) : super(key: key);
 
   @override
-  State<PRDashboardScreen> createState() => _PRDashboardScreenState();
+  State<RequestScreen> createState() => _RequestScreenState();
 }
 
-class _PRDashboardScreenState extends State<PRDashboardScreen> {
+class _RequestScreenState extends State<RequestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.canvasColor,
         title: CustomTextWidget(
           text: 'Admin Dashboard',
           fSize: context.isLandscape ? 20 : 16,
           fWeight: FontWeight.w400,
-          textColor: Colors.white,
+          textColor: Colors.grey,
         ),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: const PRMemberTable(),
+      body: const PRMemberRequestTable(),
     );
   }
 }

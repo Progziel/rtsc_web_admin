@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rtsc_web/models/user_model.dart';
 import 'package:rtsc_web/utils/constants/colors.dart';
 import 'package:rtsc_web/widgets/custom_text_widgets.dart';
 
 class PRMemberInfoTable extends StatefulWidget {
-  const PRMemberInfoTable({Key? key}) : super(key: key);
+  final UserModel userDetail;
+  const PRMemberInfoTable({Key? key, required this.userDetail}) : super(key: key);
 
   @override
   _PRMemberInfoTableState createState() => _PRMemberInfoTableState();

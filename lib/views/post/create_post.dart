@@ -1,9 +1,11 @@
+import 'dart:html';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 import 'package:intl/intl.dart';
 import 'package:rtsc_web/controllers/create_post_controller.dart';
 import 'package:rtsc_web/utils/classes/custom_screen_view.dart';
@@ -22,9 +24,17 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   final TextEditingController titleController = TextEditingController();
   FilePickerResult? result;
   late CreatePostController createPostController;
+  late QuillController quillController;
+  late PlatformFile pickedFile;
 
 
-
+  File? _image;
+  Future getImage() async {
+    final image = await ImagePickerWeb.getImageAsFile();
+    setState(() {
+      _image = image;
+    });
+  }
 
   // Future<void> addFile()async{
   //    result = await FilePicker.platform.pickFiles();
@@ -33,20 +43,22 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   //         'Picked file path: ${result?.files.single.path}');
   //   }
   // }
+
   Future<void> addFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
-      // File picking was successful
-      PlatformFile pickedFile = result.files.first;
 
-      // Assuming createPostController is an instance of CreatePostController
-      if (createPostController.posts.isNotEmpty) {
-        createPostController.posts.first.file = pickedFile;
-      } else {
-        // If there are no posts, create a new post with the picked file
+     pickedFile = result.files.first;
+      String fileName = pickedFile.name ?? "No Name"; // Get the file name
+      print("Picked file name: $fileName");
 
-      }
+      // if (createPostController.posts.isNotEmpty) {
+      //   createPostController.posts.first.file = pickedFile;
+      // } else {
+      //
+      // }
+
     } else {
       // File picking was canceled or failed
       // Handle accordingly (show a message, log, etc.)
@@ -55,8 +67,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   @override
   void initState() {
     createPostController = Get.put(CreatePostController());
-    createPostController.setQuillController(QuillController.basic());
+    quillController = QuillController.basic();
     // TODO: implement initState
+
     super.initState();
 
   }
@@ -77,14 +90,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             ElevatedButton(
               child: const Text('Post'),
               onPressed: () {
-
-                createPostController.setQuillController(QuillController.basic());
-
-               // String quillText = createPostController.quillController.getPlainText();
-
-                if (titleController.text != null ) {
+  if (titleController.text != null ) {
                   createPostController.addPost(
+                    quillController: quillController,
                     title: titleController.text,
+                    banner: _image,
                     date: DateFormat('hh:mm a dd/MM/yy').format(DateTime.now()),
                     file: createPostController.posts.isNotEmpty
                         ? createPostController.posts.first.file
@@ -94,9 +104,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                       bytes: Uint8List(0), // Replace with actual file content if available
                     ),// Placeholder, replace with appropriate logic
                   );
-                  // createPostController.addPost(
-                  //   title: titleController.text,
-                  //   file: createPostController.posts.first.file);
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text("Post Created"),
                   ));
@@ -119,33 +126,40 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    //    CustomTextWidget(text: '${createPostController.posts.last.file.path}'),
+                        CustomTextWidget(text: 'Press release'),
 
-                    ElevatedButton(
-                      child: const Text('Pick File'),
-                      onPressed: () async {
+                    InkWell(
+                        onTap: ()async{
+                          await addFile();
+                        },
+                        child: Card(child: Icon(Icons.file_upload_outlined))),
 
-                       await addFile();
-
-
-                      },
-                    ),
                   ],
                 ),
+                Divider(),
 
 
                 const CustomTextWidget(text: "Banner", fSize: 16),
                 const SizedBox(
                   height: 5,
                 ),
-                Container(
-                  width: Get.width,
-                  height: Get.height / 5,
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.grey)),
-                  child: const Icon(Icons.add_circle),
-                ),
+      GestureDetector(
+        onTap: getImage,
+        child: Container(
+          width: Get.width,
+          height: Get.height / 5,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            image: _image != null ? DecorationImage(
+              image: NetworkImage(Url.createObjectUrl(_image)),
+              fit: BoxFit.cover,
+            ) : null,
+          ),
+          child:  const Icon(Icons.add_circle),
+        ),
+      ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -166,7 +180,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   child: QuillProvider(
                     configurations: QuillConfigurations(
 
-                      controller: createPostController.quillController,
+                      controller: quillController /*createPostController.quillController*/,
                       sharedConfigurations: const QuillSharedConfigurations(
                         locale: Locale('en'),
                       ),

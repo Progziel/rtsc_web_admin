@@ -109,10 +109,7 @@ class SideMenu extends StatelessWidget {
           icon: Icons.person_pin,
           label: 'Profile',
         ),
-        const SidebarXItem(
-          icon: Icons.settings,
-          label: 'Settings',
-        ),
+
         const SidebarXItem(
           icon: Icons.logout_rounded,
           label: 'logout',

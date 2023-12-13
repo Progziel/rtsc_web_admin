@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pie_chart/pie_chart.dart';
-import 'package:rtsc_web/views/analytics/pie_chart.dart';
-
+import 'package:rtsc_web/controllers/create_post_controller.dart';
+import 'package:rtsc_web/controllers/user_controller.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../utils/constants/colors.dart';
 import '../../widgets/custom_text_widgets.dart';
 
@@ -15,9 +15,26 @@ class AnalyticsScreen extends StatefulWidget {
 }
 
 class _AnalyticsScreenState extends State<AnalyticsScreen> {
+  late List<ChartData> _chartData;
+  late UserController userController;
+  late CreatePostController createPostController;
+
+  @override
+  void initState() {
+    userController = Get.find<UserController>();
+    createPostController = Get.find<CreatePostController>();
+    _chartData = <ChartData>[
+      ChartData('Quarter 1', 55, 40, 45, 48),
+      ChartData('Quarter 2', 33, 45, 54, 28),
+      ChartData('Quarter 3', 43, 23, 20, 34),
+      ChartData('Quarter 4', 32, 54, 23, 54),
+    ];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.canvasColor,
         title: CustomTextWidget(
@@ -28,28 +45,27 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
         ),
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
-
       ),
-      body: const Padding(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+             SizedBox(
               child: Wrap(
                 children: [
                   CustomAnalyticsContainer(
-                      analyticsType: 'Total Matches',
-                      analyticsValue: '42',
+                      analyticsType: 'Total Post',
+                      analyticsValue: '${createPostController.posts.length}',
                       analyticsPercentage: '10',
                       icon: Icons.arrow_upward_outlined),
 
                   CustomAnalyticsContainer(
                       analyticsType: 'Total PR Members',
-                      analyticsValue: '12',
-                      analyticsPercentage: '33',
+                      analyticsValue: "${userController.userCount}",
+                      analyticsPercentage: '0',
                       icon: Icons.arrow_upward_outlined),
-                  CustomAnalyticsContainer(
+                  const CustomAnalyticsContainer(
                       analyticsType: 'Total Media Member',
                       analyticsValue: '452',
                       analyticsPercentage: '25',
@@ -59,21 +75,79 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 100,
+            const SizedBox(
+                height: 40
             ),
-            Expanded(
-              child: PieChartView(
-                value1: 'Matches',
-                value2: 'PR Members',
-                value3: 'Media Members',
-                chartType: ChartType.ring,
-              ),
-            ),
+            Container(
+              width: context.width * 0.8,
+              decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.75),
+                  borderRadius: const BorderRadius.all(Radius.circular(16.0))),
+              child: LayoutBuilder(
+                  builder: (context, boxContraints) => Wrap(
+                    spacing: 10.0,
+                    children: [
+                      _buildStackedLine100Chart(boxContraints.maxWidth),
+                    ],
+                  )),
+            )
           ],
         ),
       ),
     );
+  }
+
+  Container _buildStackedLine100Chart(double width) {
+    return Container(
+      height: context.height * 0.4,
+      width: width,
+      decoration: const BoxDecoration(
+        color: Colors.transparent,
+      ),
+      child: SfCartesianChart(
+        plotAreaBorderWidth: 0,
+        title: ChartTitle(text: 'User Analysis'),
+        primaryXAxis: CategoryAxis(
+          majorGridLines: const MajorGridLines(width: 0),
+          labelRotation: -45,
+        ),
+        primaryYAxis: NumericAxis(
+            rangePadding: ChartRangePadding.none,
+            axisLine: const AxisLine(width: 0),
+            majorTickLines: const MajorTickLines(size: 0)),
+        series: _getStackedLine100Series(),
+        tooltipBehavior: TooltipBehavior(enable: true),
+      ),
+    );
+  }
+
+  List<ChartSeries<ChartData, String>> _getStackedLine100Series() {
+    return <ChartSeries<ChartData, String>>[
+      StackedLine100Series<ChartData, String>(
+          dataSource: _chartData,
+          xValueMapper: (ChartData sales, _) => sales.x,
+          yValueMapper: (ChartData sales, _) => sales.father,
+          name: 'PR Member 1',
+          markerSettings: const MarkerSettings(isVisible: true)),
+      StackedLine100Series<ChartData, String>(
+          dataSource: _chartData,
+          xValueMapper: (ChartData sales, _) => sales.x,
+          yValueMapper: (ChartData sales, _) => sales.mother,
+          name: 'PR Member 2',
+          markerSettings: const MarkerSettings(isVisible: true)),
+      StackedLine100Series<ChartData, String>(
+          dataSource: _chartData,
+          xValueMapper: (ChartData sales, _) => sales.x,
+          yValueMapper: (ChartData sales, _) => sales.son,
+          name: 'PR Member 3',
+          markerSettings: const MarkerSettings(isVisible: true)),
+      StackedLine100Series<ChartData, String>(
+          dataSource: _chartData,
+          xValueMapper: (ChartData sales, _) => sales.x,
+          yValueMapper: (ChartData sales, _) => sales.daughter,
+          name: 'PR Member 4',
+          markerSettings: const MarkerSettings(isVisible: true))
+    ];
   }
 }
 
@@ -147,7 +221,6 @@ class CustomAnalyticsContainer extends StatelessWidget {
         child: Container(
           height: Get.height * 0.2,
           width: Get.width * 0.24,
-          
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
@@ -210,4 +283,13 @@ class CustomAnalyticsContainer extends StatelessWidget {
       ),
     );
   }
+}
+
+class ChartData {
+  ChartData(this.x, this.father, this.mother, this.son, this.daughter);
+  final String x;
+  final num father;
+  final num mother;
+  final num son;
+  final num daughter;
 }

@@ -3,6 +3,7 @@ class Assets {
   Assets._();
 
   static const String assetsImagesUser = 'assets/images/user.png';
+  static const String assetsImagesUser5 = 'assets/images/user5.svg';
   static const String imagesLogo = 'assets/images/logo.png';
   static const String imagesUser = 'assets/images/user.jpg';
   static const String imagesUser2 = 'assets/images/user2.jpg';

@@ -3,6 +3,7 @@ import 'package:rtsc_web/views/analytics/analytics_screen.dart';
 import 'package:rtsc_web/views/post/create_post.dart';
 import 'package:rtsc_web/views/pr_member/pr_members.dart';
 import 'package:rtsc_web/views/pr_request/request_screen.dart';
+import 'package:rtsc_web/views/profile/profile_screen.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 import '../home/home_screen.dart';
@@ -33,6 +34,8 @@ class ScreensView extends StatelessWidget {
             return CreatePostScreen();
           case 4 :
             return AnalyticsScreen();
+          case 5 :
+            return ProfileScreen();
           default:
             return Text(
               pageTitle,
@@ -59,8 +62,6 @@ String getTitleByIndex(int index) {
     case 5:
       return 'Profile';
     case 6:
-      return 'Settings';
-    case 7:
       return 'Logout';
     default:
       return 'Not found page';

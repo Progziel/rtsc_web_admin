@@ -9,6 +9,7 @@ import 'package:rtsc_web/widgets/custom_textformfield.dart';
 import '../../widgets/custom_button_field.dart';
 
 class PRMemberScreen extends StatelessWidget {
+
   const PRMemberScreen({super.key});
 
   @override
@@ -25,7 +26,7 @@ class PRMemberScreen extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(14.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
             Row(
@@ -47,7 +48,7 @@ class PRMemberScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 15.0),
-            PRMembersTable()
+            Expanded(child: PRMembersTable())
           ],
         ),
       ),

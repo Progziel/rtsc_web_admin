@@ -30,17 +30,14 @@ class ScreensView extends StatelessWidget {
             return PRMemberScreen();
           case 2:
             return RequestScreen();
-          case 3 :
+          case 3:
             return CreatePostScreen();
-          case 4 :
+          case 4:
             return AnalyticsScreen();
-          case 5 :
+          case 5:
             return ProfileScreen();
           default:
-            return Text(
-              pageTitle,
-              style: theme.textTheme.headlineSmall,
-            );
+            return HomeScreen();
         }
       },
     );

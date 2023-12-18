@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -21,24 +22,20 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-
       decoration: InputDecoration(
         hintText: hintText,
         enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey ), // Default border color
+          borderSide: BorderSide(color: Colors.grey), // Default border color
         ),
         focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white), // Border color when focused
+          borderSide:
+              BorderSide(color: Colors.grey), // Border color when focused
         ),
-
-        border: const OutlineInputBorder(
-        ),
-
+        border: const OutlineInputBorder(),
       ),
       obscureText: obscureText,
       keyboardType: keyboardType,
       onChanged: onChanged,
-
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Please enter some text';
@@ -49,7 +46,6 @@ class CustomTextFormField extends StatelessWidget {
     );
   }
 }
-
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
@@ -67,35 +63,68 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        height: 45,
-        child: TextFormField(
-            style: GoogleFonts.poppins(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              color: Colors.black,
-            ),
-            controller: controller,
-            keyboardType: keyboardType ?? TextInputType.text,
-            decoration: InputDecoration(
-              hoverColor: Colors.grey,
-                filled: true,
-                fillColor: Colors.grey.shade200,
-                hintStyle: GoogleFonts.poppins(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.grey,
-                ),
-                border: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black12),
+      child: TextFormField(
+          style: GoogleFonts.poppins(
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: Colors.black,
+          ),
+          controller: controller,
+          keyboardType: keyboardType ?? TextInputType.text,
+          decoration: InputDecoration(
+              hoverColor: Colors.grey.shade300,
+              filled: true,
+              fillColor: Colors.grey.shade200,
+              hintStyle: GoogleFonts.poppins(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                color: Colors.grey,
+              ),
+              border: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black12),
+              ),
+              focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black),
+              ),
+              hintText: hintText,
+              prefixIcon: Icon(icon),
+              isCollapsed: false)),
+    );
+  }
+}
+class NewCustomTextField extends StatelessWidget {
+  final String text;
+  bool? obscure = false;
+  final TextEditingController? controller;
+  NewCustomTextField({
+    super.key,
+    required this.text,
 
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
-                ),
-                hintText: hintText,
-                prefixIcon: Icon(icon),
-                isCollapsed: false)),
+    required this.controller,
+    this.obscure,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: Get.width * 0.2,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.grey.shade200.withOpacity(0.1),
+      ),
+      child: TextFormField(
+        controller: controller,
+        obscureText: obscure ?? false,
+        style:
+        const TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+        decoration: InputDecoration(
+          // labelText: text,
+          // labelStyle:
+          //     const TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.white)),
+        ),
       ),
     );
   }

@@ -5,6 +5,7 @@ import 'package:rtsc_web/models/user_model.dart';
 class UserController extends GetxController {
 
   RxInt userCount = 0.obs;
+  RxBool loading = true.obs;
 
   var users = <UserModel>[
     UserModel(firstName: "PR",lastName: "1",email: "pr1@gmail.com",phoneNumber: "9121211111",accepted: false),

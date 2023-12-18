@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rtsc_web/widgets/custom_text_widgets.dart';
 
-import '../utils/constants/colors.dart';
 class CustomButton extends StatelessWidget {
   final String text;
   final Color? textColor;
@@ -26,7 +25,7 @@ class CustomButton extends StatelessWidget {
           height: 40.0,
           width: 100,
           decoration: BoxDecoration(
-              color: buttonColor ?? AppColors.canvasColor,
+              color: buttonColor ?? Colors.redAccent,
               borderRadius: BorderRadius.circular(12.0)),
           child: Padding(
             padding: const EdgeInsets.all(4),

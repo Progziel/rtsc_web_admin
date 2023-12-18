@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rtsc_web/utils/constants/colors.dart';
+import 'package:rtsc_web/views/authentication/login.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class SideMenu extends StatelessWidget {
@@ -31,7 +33,7 @@ class SideMenu extends StatelessWidget {
         selectedTextStyle: GoogleFonts.poppins(
           fontSize: 16,
           fontWeight: FontWeight.w500,
-          color:Color(0xABB60505) ,
+          color: const Color(0xABB60505),
         ),
         itemTextPadding: const EdgeInsets.only(left: 30),
         selectedItemTextPadding: const EdgeInsets.only(left: 30),
@@ -54,7 +56,7 @@ class SideMenu extends StatelessWidget {
             )
           ],
         ),
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.black54,
           size: 20,
         ),
@@ -62,7 +64,6 @@ class SideMenu extends StatelessWidget {
           color: Color(0xABB60505),
           size: 20,
         ),
-
       ),
       extendedTheme: const SidebarXTheme(
         width: 200,
@@ -71,7 +72,6 @@ class SideMenu extends StatelessWidget {
         ),
       ),
       footerDivider: AppColors.divider,
-
       headerBuilder: (context, extended) {
         return SizedBox(
           height: 120,
@@ -82,12 +82,9 @@ class SideMenu extends StatelessWidget {
         );
       },
       items: [
-        SidebarXItem(
+        const SidebarXItem(
           icon: Icons.home,
           label: 'Home',
-          onTap: () {
-            debugPrint('Home');
-          },
         ),
         const SidebarXItem(
           icon: Icons.person_2_rounded,
@@ -109,8 +106,8 @@ class SideMenu extends StatelessWidget {
           icon: Icons.person_pin,
           label: 'Profile',
         ),
-
-        const SidebarXItem(
+        SidebarXItem(
+          onTap: () => Get.to(const LoginScreen()),
           icon: Icons.logout_rounded,
           label: 'logout',
         ),
